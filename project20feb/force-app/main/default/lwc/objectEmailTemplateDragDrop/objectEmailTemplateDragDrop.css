@@ -1,0 +1,22 @@
+/* Style for the drop zone */
+.drop-zone {
+    min-height: 150px;
+    border: 2px dashed #d8dde6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style for draggable fields */
+.draggable-field {
+    cursor: move;
+    background-color: #f3f6f9;
+    margin-bottom: 4px;
+    padding: 0.5rem;
+}
+
+/* Optional: Additional styling for clarity */
+.slds-box {
+    padding: 1rem;
+}
