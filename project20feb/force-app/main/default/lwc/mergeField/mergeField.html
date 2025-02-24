@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="SObject"> 
+    <lightning-card title="SObject">
         <div class="slds-m-around_medium">
             <lightning-layout pull-to-boundary="medium">
                 <lightning-layout-item flexibility="auto" padding="horizontal-medium" size="4">
@@ -24,16 +24,17 @@
             <template if:true={optObject}>
                 <template for:each={templateRecords} for:item="template">
                     <lightning-badge class="pointer" key={template.Id} label={template.Name} data-id={template.Id}
-                        data-value={template.HtmlValue} data-subject={template.Subject} icon-name="standard:email" icon-position="end"
-                        onclick={handleTemplate}></lightning-badge>
+                        data-value={template.HtmlValue} data-subject={template.Subject} icon-name="standard:email"
+                        icon-position="end" onclick={handleTemplate}></lightning-badge>
                 </template>
             </template>
         </div>
         <div class="slds-m-around_medium">
             <template if:true={templateContent}>
-                <lightning-formatted-text value={templateSubject} ></lightning-formatted-text>
+                <lightning-formatted-text aria-label="Subject" value={templateSubject}></lightning-formatted-text>
                 <lightning-input-rich-text data-id={templateId} value={templateContent}></lightning-input-rich-text>
             </template>
         </div>
+
     </lightning-card>
 </template>

@@ -10,7 +10,7 @@ public with sharing class EmailTemplateController {
     }
 
     /**
-     * Author: Shivam Barya
+     * Author: Shivam Barya  
      * getSobjectEmailTemplates: get the related email templates where the RelatedEntityType field matches the provided value.
      * 
      * @param {String} objectName - name of the object
@@ -24,7 +24,7 @@ public with sharing class EmailTemplateController {
     }
 
     /**
-     * Author: Shivam Barya
+     * Author: Shivam Barya  
      * fetchAllObects: fetch all the SObject.
      * @return {List<Object>}
      */
@@ -39,7 +39,7 @@ public with sharing class EmailTemplateController {
         return objName;
     }
     /**
-     * Author: Shivam Barya
+     * Author: Shivam Barya  
      * fetchAllObects: fetch all the SObject field label and field api name based on the Sobject type.
      * @param {String} objectName - name of the object
      * @return {List<String>}

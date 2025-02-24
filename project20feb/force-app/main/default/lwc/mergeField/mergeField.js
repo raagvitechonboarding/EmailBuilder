@@ -7,7 +7,7 @@ import getSobjectEmailTemplates from '@salesforce/apex/EmailTemplateController.g
 
 export default class MergeField extends LightningElement {
 
-    optObject; 
+    optObject;
     allRecord;
     options;
     objectFields;
@@ -16,9 +16,8 @@ export default class MergeField extends LightningElement {
     objectFieldRecord;
     templateRecords;
     templateId;
-    templateContent;
+    @track templateContent;
     templateSubject;
-    badgeClass = 'badge-blue';
 
     @wire(fetchAllObject)
     wiredFetchObject({ data, error }) {
@@ -32,9 +31,12 @@ export default class MergeField extends LightningElement {
     }
 
     handleKeyChange(event) {
+        this.templateContent = ''
         this.optObject = event.target.value;
         this.handleObjectFields();
-        this.handleEmailTemplate();
+        if (this.optObject) {
+            this.handleEmailTemplate();
+        }
     }
 
     async handleObjectFields() {
@@ -53,18 +55,27 @@ export default class MergeField extends LightningElement {
 
     async handleEmailTemplate() {
         this.templateRecords = await getSobjectEmailTemplates({ objectName: this.optObject });
+        console.log('templateRecords: ' + JSON.stringify(this.templateRecords));
     }
 
     handleFieldChange(event) {
         this.optObjectField = event.target.value;
     }
 
-    handleTemplate(event){
+    handleTemplate(event) {
         this.templateId = event.target.dataset.id;
-        this.badgeClass = this.badgeClass === 'badge-blue' ? 'badge-green' : 'badge-blue';
-        this.templateContent = event.target.dataset.value;
+        const badgeValue = this.templateRecords.find(item => item.Id === event.target.dataset.id);
+        if (badgeValue) {
+            this.templateContent = event.target.dataset.value;
+        }
         this.templateSubject = event.target.dataset.subject;
-        console.log('+++++++++templateId+++++++++ ', JSON.stringify(this.templateId));
-        console.log('+++++++++templateContent+++++++++ ', JSON.stringify(this.templateContent));
+        const selectedBadge = this.template.querySelector(`lightning-badge[data-id="${this.templateId}"]`);
+        selectedBadge.classList.add('badge-blue');
+        const allBadges = this.template.querySelectorAll('lightning-badge');
+        allBadges.forEach(badge => {
+            if (badge.dataset.id !== this.templateId) {
+                badge.classList.remove('badge-blue');
+            }
+        });
     }
 }
