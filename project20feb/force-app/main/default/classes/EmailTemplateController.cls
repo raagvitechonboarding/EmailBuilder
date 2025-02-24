@@ -1,6 +1,6 @@
 public with sharing class EmailTemplateController {
     @AuraEnabled(cacheable=true)
-    public static List<EmailTemplate> getEmailTemplates(String relatedEntityType) {
+    public static List<EmailTemplate> getEmailTemplates(String relatedEntityType) { 
         // Query email templates where the RelatedEntityType field matches the provided value
         return [
             SELECT Id, Name, DeveloperName, FolderName, TemplateType, Subject, Body, RelatedEntityType 
@@ -17,7 +17,7 @@ public with sharing class EmailTemplateController {
      * @return {List<EmailTemplate>}
      */
     @AuraEnabled
-    public static List<EmailTemplate> getSobjectEmailTemplates(String objectName){
+    public static List<EmailTemplate> getSobjectEmailTemplates(String objectName){ 
         return [SELECT Id, Name, Body,HtmlValue, DeveloperName, Owner.Email, Subject, FolderId, FolderName, RelatedEntityType
                 FROM EmailTemplate 
                 WHERE RelatedEntityType =:objectName WITH USER_MODE];
@@ -30,7 +30,7 @@ public with sharing class EmailTemplateController {
      */
     
     @AuraEnabled(cacheable=true)
-    public static List<Object> fetchAllObject(){
+    public static List<Object> fetchAllObject(){ 
         List<Schema.SObjectType> gd = Schema.getGlobalDescribe().Values();
         List<Object> objName = new List<String>();
         for(Schema.SObjectType f : gd){
@@ -46,7 +46,7 @@ public with sharing class EmailTemplateController {
      */
     
     @AuraEnabled
-    public static Map<String, String> fetchSobjectFields(String objectName){
+    public static Map<String, String> fetchSobjectFields(String objectName){ 
         try {
             Map<String, String> allSObjects = new Map<String, String>();
             Map<String, SObjectType> gd = Schema.getGlobalDescribe();

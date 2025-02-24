@@ -7,7 +7,7 @@ import getSobjectEmailTemplates from '@salesforce/apex/EmailTemplateController.g
 
 export default class MergeField extends LightningElement {
 
-    optObject;
+    optObject; 
     allRecord;
     options;
     objectFields;
