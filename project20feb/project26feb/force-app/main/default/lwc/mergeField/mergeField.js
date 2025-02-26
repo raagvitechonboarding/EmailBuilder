@@ -2,6 +2,8 @@ import { LightningElement, track, wire } from 'lwc';
 import fetchAllObject from '@salesforce/apex/EmailTemplateController.fetchAllObject';
 import fetchSobjectFields from '@salesforce/apex/EmailTemplateController.fetchSobjectFields';
 import getSobjectEmailTemplates from '@salesforce/apex/EmailTemplateController.getSobjectEmailTemplates';
+import updateEmailTemplate from '@salesforce/apex/EmailTemplateController.updateEmailTemplate';
+
 
 
 
@@ -18,6 +20,7 @@ export default class MergeField extends LightningElement {
     templateId;
     @track templateContent;
     templateSubject;
+    templateBody;
 
     @wire(fetchAllObject)
     wiredFetchObject({ data, error }) {
@@ -67,8 +70,8 @@ export default class MergeField extends LightningElement {
         const badgeValue = this.templateRecords.find(item => item.Id === event.target.dataset.id);
         if (badgeValue) {
             this.templateContent = event.target.dataset.value;
+            this.templateSubject = event.target.dataset.subject;
         }
-        this.templateSubject = event.target.dataset.subject;
         const selectedBadge = this.template.querySelector(`lightning-badge[data-id="${this.templateId}"]`);
         selectedBadge.classList.add('badge-blue');
         const allBadges = this.template.querySelectorAll('lightning-badge');
@@ -77,5 +80,26 @@ export default class MergeField extends LightningElement {
                 badge.classList.remove('badge-blue');
             }
         });
+    }
+
+    handleSave() {
+        const newSubject = this.template.querySelector('.subject').value;
+        const newBody = this.template.querySelector('.body').value;
+        console.log('templateId: ' + this.templateId);
+        console.log('templateSubject: ' + JSON.stringify(newSubject));
+        console.log('templateContent:' + JSON.stringify(newBody));
+        updateEmailTemplate({
+            templateId: this.templateId,
+            newBody: newBody,
+            newSubject: newSubject
+        })
+            .then(result => {
+                console.log('result: ' + JSON.stringify(result));
+                console.log('Email Template updated successfully');
+            })
+            .catch(error => {
+                console.error('Error updating Email Template:', error);
+            });
+
     }
 }

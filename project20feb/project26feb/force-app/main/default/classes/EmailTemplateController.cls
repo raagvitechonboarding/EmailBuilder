@@ -5,7 +5,19 @@ public with sharing class EmailTemplateController {
      * description: fetching all the email templates from email template object
      * @return List<EmailTemplate>
      */
-    
+    @AuraEnabled
+    public static EmailTemplate updateEmailTemplate(String templateId, String newBody, String newSubject) {
+        EmailTemplate template = [
+            SELECT Id, Body,HtmlValue, Subject
+            FROM EmailTemplate
+            WHERE Id = :templateId WITH USER_MODE
+        ];
+        template.HtmlValue = newBody;
+        template.Subject = newSubject;
+        System.debug('template+++++++++++++' + template);
+        return template;
+        // UPDATE AS USER template;
+    }   
     @AuraEnabled
     public static List<EmailTemplate> getSobjectEmailTemplates(String objectName){
         return [SELECT Id, Name, Body,HtmlValue, DeveloperName, Owner.Email, Subject, FolderId, FolderName, RelatedEntityType
